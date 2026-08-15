@@ -1,0 +1,23 @@
+# Dependencies
+node_modules/
+
+# Secrets — never commit
+.env
+.env.local
+.env.*.local
+
+# Build output
+client/dist/
+
+# SQLite database (contains real customer/order data once live)
+server/data/*.db
+server/data/*.db-*
+
+# Uploaded product images generated at runtime (keep the seeded ones if you want them in the repo;
+# remove this line if you DO want /server/uploads tracked in git)
+# server/uploads/*
+
+# Logs / OS junk
+npm-debug.log*
+.DS_Store
+Thumbs.db
