@@ -5,6 +5,7 @@ import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import rateLimit from 'express-rate-limit';
 import path from 'path';
+import fs from 'fs';
 import { fileURLToPath } from 'url';
 
 import { optionalAuth } from './middleware/auth.js';
@@ -52,8 +53,21 @@ app.use('/api/products', productRoutes);
 app.use('/api/orders', orderRoutes);
 app.use('/api/admin', optionalAuth, adminRoutes);
 
-// 404 + error handlers
+// --- Serve the built React app (client/dist) so one Node process can host both
+// the API and the storefront — needed for single-app hosts like Hostinger. ---
+const clientDist = path.join(__dirname, '..', '..', 'client', 'dist');
+if (fs.existsSync(clientDist)) {
+  app.use(express.static(clientDist, { maxAge: '1d', index: false }));
+}
+
+// 404 for unmatched API routes
 app.use('/api', (_req, res) => res.status(404).json({ error: 'Not found' }));
+
+// SPA fallback: any other GET request gets index.html so React Router can handle it.
+app.get('*', (req, res, next) => {
+  if (!fs.existsSync(clientDist)) return next();
+  res.sendFile(path.join(clientDist, 'index.html'));
+});
 // eslint-disable-next-line no-unused-vars
 app.use((err, _req, res, _next) => {
   console.error(err);

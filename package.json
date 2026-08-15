@@ -3,13 +3,18 @@
   "private": true,
   "version": "1.0.0",
   "description": "Scentrances — perfume e-commerce store (React + Express + SQLite)",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "workspaces": ["client", "server"],
   "scripts": {
     "install:all": "npm --prefix server install && npm --prefix client install",
     "seed": "npm --prefix server run seed",
     "dev:server": "npm --prefix server run dev",
     "dev:client": "npm --prefix client run dev",
     "dev": "concurrently -n api,web -c magenta,cyan \"npm:dev:server\" \"npm:dev:client\"",
-    "build": "npm --prefix client run build"
+    "build": "npm --prefix client run build",
+    "start": "npm --prefix server run start"
   },
   "devDependencies": {
     "concurrently": "^9.1.0"
