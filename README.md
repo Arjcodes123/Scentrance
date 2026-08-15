@@ -87,4 +87,5 @@ Product images live in `server/uploads/products/`. To add a new perfume:
 - Set `NODE_ENV=production` (enables `secure` cookies — serve over HTTPS).
 - Point `CLIENT_ORIGIN` at your deployed frontend URL.
 - Build the client (`npm run build`) and serve `client/dist` behind your web server/CDN.
-- Consider a managed DB and an image/object store if traffic grows; SQLite is great to start.
+- Consider a managed DB and an image/object store if traffic grows; SQLite is great to start
+
